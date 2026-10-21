@@ -35,7 +35,7 @@ export const CompanyLogo = memo(function CompanyLogo({
 }: CompanyLogoProps) {
   const sources = useMemo(() => {
     const list: string[] = [];
-    const key = import.meta.env.VITE_LOGO_DEV_PUBLISHABLE_KEY as string | undefined;
+    const key = import.meta.env["VITE_LOGO_DEV_PUBLISHABLE_KEY"] as string | undefined;
     const domain = domainFrom(websiteUrl);
     if (key && domain) list.push(`https://img.logo.dev/${domain}?token=${key}&size=128&format=png`);
     if (logoUrl) list.push(logoUrl);

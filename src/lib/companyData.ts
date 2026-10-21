@@ -194,21 +194,21 @@ export function normalizeCompanyType(value: unknown): CompanyType {
 
 export function normalizeCompanySummary(shortJson: unknown, id = 0): CompanySummary {
   const s = asRecord(shortJson);
-  const name = asString(s.name);
+  const name = asString(s["name"]);
   return {
-    id: Number(s.company_id ?? id) || id,
+    id: Number(s["company_id"] ?? id) || id,
     name,
-    shortName: asString(s.short_name) || name,
-    logoUrl: asString(s.logo_url),
-    category: asString(s.category),
-    companyType: normalizeCompanyType(s.company_type),
-    incorporationYear: asString(s.incorporation_year),
-    employeeSize: asString(s.employee_size),
-    headquarters: asString(s.headquarters_address),
-    operatingCountries: asString(s.operating_countries),
-    officeLocations: asString(s.office_locations),
-    yoyGrowthRate: asString(s.yoy_growth_rate),
-    websiteUrl: asString(s.website_url),
+    shortName: asString(s["short_name"]) || name,
+    logoUrl: asString(s["logo_url"]),
+    category: asString(s["category"]),
+    companyType: normalizeCompanyType(s["company_type"]),
+    incorporationYear: asString(s["incorporation_year"]),
+    employeeSize: asString(s["employee_size"]),
+    headquarters: asString(s["headquarters_address"]),
+    operatingCountries: asString(s["operating_countries"]),
+    officeLocations: asString(s["office_locations"]),
+    yoyGrowthRate: asString(s["yoy_growth_rate"]),
+    websiteUrl: asString(s["website_url"]),
   };
 }
 
@@ -233,16 +233,16 @@ export function normalizeDashboardSkills(
   return (Array.isArray(skillLevels) ? skillLevels : [])
     .map((raw) => {
       const r = asRecord(raw);
-      const id = Number(r.skill_set_id) || 0;
-      const level = Math.max(0, Math.min(10, Number(r.required_level) || 0));
+      const id = Number(r["skill_set_id"]) || 0;
+      const level = Math.max(0, Math.min(10, Number(r["required_level"]) || 0));
       const topics = (topicsBySkill[id] ?? [])
         .map((t) => ({ level: Number(t.level_number), topic: asString(t.topic) }))
         .sort((a, b) => a.level - b.level);
       return {
         id,
-        name: asString(r.skill_set_name) || titleCaseFromCode(asString(r.skill_set_code)),
+        name: asString(r["skill_set_name"]) || titleCaseFromCode(asString(r["skill_set_code"])),
         requiredLevel: level,
-        proficiency: asString(r.required_proficiency),
+        proficiency: asString(r["required_proficiency"]),
         bloom: proficiencyToBloom(level),
         criticality: scoreToCriticality(level),
         difficulty: scoreToDifficulty(level),
