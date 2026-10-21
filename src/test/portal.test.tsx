@@ -55,7 +55,7 @@ describe("skill rules", () => {
 });
 
 describe("seed data", () => {
-  const seed = SEED_COMPANIES[0];
+  const seed = SEED_COMPANIES[0]!;
 
   it("builds 22 intelligence sections with no CTC / stipend / selection ratio fields", () => {
     const profile = normalizeCompanyProfile(seed.full_json, seed.short_json, seed.company_id);
@@ -68,7 +68,7 @@ describe("seed data", () => {
   it("gives all 12 skills a 10-level roadmap, sorted by level descending", () => {
     const skills = normalizeDashboardSkills(seed.skill_levels, SKILL_TOPICS);
     expect(skills).toHaveLength(12);
-    expect(skills[0].name).toBe("Data Structures & Algorithms");
+    expect(skills[0]?.name).toBe("Data Structures & Algorithms");
     for (const s of skills) expect(s.topics).toHaveLength(10);
   });
 
